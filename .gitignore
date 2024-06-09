@@ -1,1 +1,6 @@
-.vs
+# Ignore Visual Studio folder recursively
+**/.vs/
+
+# Ignore bin and obj folders recursively
+**/bin/
+**/obj/
