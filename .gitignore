@@ -1,6 +1,6 @@
-# Ignore Visual Studio folder
-.vs/
+# Ignore Visual Studio folder recursively
+**/.vs/
 
-# Ignore build results
-bin/
-obj/
+# Ignore bin and obj folders recursively
+**/bin/
+**/obj/
