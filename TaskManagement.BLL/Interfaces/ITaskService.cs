@@ -11,5 +11,6 @@ namespace TaskManagement.BLL.Interfaces
     {
         public Task<List<TaskBo>> GetAllTasks();
         public Task<bool> AddTask(TaskBo task);
+        public Task<bool> UpdateTask(TaskBo taskBo);
     }
 }

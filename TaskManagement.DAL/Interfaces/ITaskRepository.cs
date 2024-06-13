@@ -11,5 +11,6 @@ namespace TaskManagement.DAL.Interfaces
     {
         public Task<List<TaskDto>> GetAllTasks();
         public Task<bool> AddTask(TaskDto taskDto);
+        public Task<bool> UpdateTask(TaskDto taskDto);
     }
 }
