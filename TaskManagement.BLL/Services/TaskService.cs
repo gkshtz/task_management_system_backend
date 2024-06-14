@@ -32,5 +32,11 @@ namespace TaskManagement.BLL.Services
             var result = await _taskRepository.AddTask(taskDto);
             return result;
         }
+        public async Task<bool> UpdateTask(TaskBo taskBo)
+        {
+            var taskDto = _mapper.Map<TaskDto>(taskBo);
+            var result = await _taskRepository.UpdateTask(taskDto);
+            return result;
+        }
     }
 }

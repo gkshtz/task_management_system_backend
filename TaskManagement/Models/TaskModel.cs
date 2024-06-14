@@ -15,5 +15,12 @@ namespace TaskManagement.Models
         public DateTime DueDate { get; set; }
 
         public Status Status { get; set; }
+        public TaskModel()
+        {
+            Name = string.Empty;
+            Description = string.Empty;
+            StartDate = DateTime.MinValue;
+            DueDate = DateTime.MinValue;
+        }
     }
 }

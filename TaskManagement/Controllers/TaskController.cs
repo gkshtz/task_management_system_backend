@@ -38,5 +38,15 @@ namespace TaskManagement.Controllers
                 return StatusCode(500);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> PutAsync([FromBody] TaskModel taskModel)
+        {
+            var taskBo = _mapper.Map<TaskBo>(taskModel);
+            var result = await _taskService.UpdateTask(taskBo);
+            if(result)
+                return Ok();
+            else
+                return NotFound();
+        }
     }
 }
