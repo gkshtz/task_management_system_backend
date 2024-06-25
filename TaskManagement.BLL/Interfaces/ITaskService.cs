@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace TaskManagement.BLL.Interfaces
         public Task<List<TaskBo>> GetAllTasks();
         public Task<bool> AddTask(TaskBo task);
         public Task<bool> UpdateTask(TaskBo taskBo);
+        public Task<bool> DeleteTask(int id);
     }
 }

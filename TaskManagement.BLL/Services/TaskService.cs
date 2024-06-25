@@ -38,5 +38,11 @@ namespace TaskManagement.BLL.Services
             var result = await _taskRepository.UpdateTask(taskDto);
             return result;
         }
+
+        public async Task<bool> DeleteTask(int id)
+        {
+            var result = await _taskRepository.DeleteTask(id);
+            return result;
+        }
     }
 }

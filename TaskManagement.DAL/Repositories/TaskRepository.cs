@@ -61,5 +61,16 @@ namespace TaskManagement.DAL.Repositories
             else
                 return false;
         }
+        public async Task<bool> DeleteTask(int id)
+        {
+            var task = _appDbContext.Tasks.Where(x=>x.Id == id).FirstOrDefault();
+            if(task!=null)
+            {
+                _appDbContext.Tasks.Remove(task);
+                await _appDbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }
