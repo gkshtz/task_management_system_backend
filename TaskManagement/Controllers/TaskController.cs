@@ -1,6 +1,4 @@
-﻿using System.Formats.Asn1;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.BLL.BOs;
 using TaskManagement.BLL.Interfaces;
@@ -47,6 +45,15 @@ namespace TaskManagement.Controllers
                 return Ok();
             else
                 return NotFound();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync([FromQuery] int id)
+        {
+            var result = await _taskService.DeleteTask(id);
+            if (result)
+                return Ok();
+            return NotFound();
         }
     }
 }
