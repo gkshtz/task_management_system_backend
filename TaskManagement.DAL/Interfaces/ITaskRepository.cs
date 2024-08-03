@@ -10,7 +10,7 @@ namespace TaskManagement.DAL.Interfaces
     public interface ITaskRepository
     {
         public Task<List<TaskDto>> GetAllTasks();
-        public Task<bool> AddTask(TaskDto taskDto);
+        public Task<TaskDto> AddTask(TaskDto taskDto);
         public Task<bool> UpdateTask(TaskDto taskDto);
 
         public Task<bool> DeleteTask(int id);

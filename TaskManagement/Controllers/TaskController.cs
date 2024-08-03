@@ -22,7 +22,13 @@ namespace TaskManagement.Controllers
         {
             var taskBo = await _taskService.GetAllTasks();
             var taskModels = _mapper.Map<List<TaskModel>>(taskBo);
-            return Ok(taskModels);
+            GenericResponse<List<TaskModel>> response = new GenericResponse<List<TaskModel>>
+            {
+                StatusCode = 200,
+                ResponseData = taskModels,
+                ResponseMessage = "Success"
+            };
+            return Ok(response);
         }
 
         [HttpPost]
@@ -30,10 +36,14 @@ namespace TaskManagement.Controllers
         {
             var taskBo = _mapper.Map<TaskBo>(taskModel);
             var result = await _taskService.AddTask(taskBo);
-            if (result)
-                return Ok();
-            else
-                return StatusCode(500);
+            taskModel = _mapper.Map<TaskModel>(result);
+            GenericResponse<TaskModel> response = new GenericResponse<TaskModel>
+            {
+               StatusCode = 200,
+               ResponseData = taskModel,
+               ResponseMessage = "Success"
+            };
+            return Ok(response);
         }
 
         [HttpPut]
@@ -41,10 +51,27 @@ namespace TaskManagement.Controllers
         {
             var taskBo = _mapper.Map<TaskBo>(taskModel);
             var result = await _taskService.UpdateTask(taskBo);
-            if(result)
-                return Ok();
+
+            if (result)
+            {
+                GenericResponse<bool> response = new GenericResponse<bool>
+                {
+                    StatusCode = 200,
+                    ResponseData = true,
+                    ResponseMessage = "Success"
+                };
+                return Ok(response);
+            }
             else
-                return NotFound();
+            {
+                GenericResponse<bool> response = new GenericResponse<bool>
+                {
+                    StatusCode = 404,
+                    ResponseData = false,
+                    ResponseMessage = "Record Not Found"
+                };
+                return Ok(response);
+            }
         }
 
         [HttpDelete]
@@ -52,8 +79,25 @@ namespace TaskManagement.Controllers
         {
             var result = await _taskService.DeleteTask(id);
             if (result)
-                return Ok();
-            return NotFound();
+            {
+                GenericResponse<bool> response = new GenericResponse<bool>
+                {
+                    StatusCode = 200,
+                    ResponseData = true,
+                    ResponseMessage = "Success"
+                };
+                return Ok(response);
+            }
+            else
+            {
+                GenericResponse<bool> response = new GenericResponse<bool>
+                {
+                    StatusCode = 404,
+                    ResponseData = false,
+                    ResponseMessage = "Record Not Found"
+                };
+                return Ok(response);
+            }
         }
     }
 }

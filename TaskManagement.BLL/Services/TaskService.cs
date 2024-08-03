@@ -26,11 +26,11 @@ namespace TaskManagement.BLL.Services
             var taskBos = _mapper.Map<List<TaskBo>>(taskDtos);
             return taskBos;
         }
-        public async Task<bool> AddTask(TaskBo taskBo)
+        public async Task<TaskBo> AddTask(TaskBo taskBo)
         {
             var taskDto = _mapper.Map<TaskDto>(taskBo);
             var result = await _taskRepository.AddTask(taskDto);
-            return result;
+            return _mapper.Map<TaskBo>(result);
         }
         public async Task<bool> UpdateTask(TaskBo taskBo)
         {

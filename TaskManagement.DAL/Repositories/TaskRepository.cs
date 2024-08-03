@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using TaskManagement.DAL.Data;
 using TaskManagement.DAL.DTOs;
 using TaskManagement.DAL.Entities;
@@ -25,12 +20,12 @@ namespace TaskManagement.DAL.Repositories
             var tasks = _appDbContext.Tasks.ToList();
             return _mapper.Map<List<TaskDto>>(tasks);
         }
-        public async Task<bool> AddTask(TaskDto taskDto)
+        public async Task<TaskDto> AddTask(TaskDto taskDto)
         {
             var task = _mapper.Map<Tasks>(taskDto);
-            _appDbContext.Tasks.Add(task);
+            task = _appDbContext.Tasks.Add(task).Entity;
             await _appDbContext.SaveChangesAsync();
-            return true;
+            return _mapper.Map<TaskDto>(task);
         }
         public async Task<bool> UpdateTask(TaskDto taskDto)
         {
@@ -63,11 +58,11 @@ namespace TaskManagement.DAL.Repositories
         }
         public async Task<bool> DeleteTask(int id)
         {
-            var task = _appDbContext.Tasks.Where(x=>x.Id == id).FirstOrDefault();
+            var task = _appDbContext.Tasks.Where(x=>x.Id==id).FirstOrDefault();
             if(task!=null)
             {
                 _appDbContext.Tasks.Remove(task);
-                await _appDbContext.SaveChangesAsync();
+                _appDbContext.SaveChanges();
                 return true;
             }
             return false;

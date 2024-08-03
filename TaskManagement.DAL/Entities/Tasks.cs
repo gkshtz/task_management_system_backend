@@ -25,5 +25,13 @@ namespace TaskManagement.DAL.Entities
 
         [Column("Status")]
         public Status Status { get; set; }
+
+        [ForeignKey("User")]
+        [Column("UserId")]
+        public int UserId { get; set; }
+
+        #region Navigation property
+        public User User { get; set; }
+        #endregion
     }
 }
