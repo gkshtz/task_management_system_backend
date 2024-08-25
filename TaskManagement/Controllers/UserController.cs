@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection.Metadata.Ecma335;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,57 @@ namespace TaskManagement.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-            
+
         }
         [HttpPost]
         public async Task<IActionResult> PostAsync(UserModel userModel)
         {
             var userBo = await _userService.RegisterUser(_mapper.Map<UserBo>(userModel));
-            if (userBo!=null)
+            if (userBo != null)
             {
-                return Ok(userBo);
+                userModel = _mapper.Map<UserModel>(userBo);
+                userModel.Password = null;
+                GenericResponse<UserModel> response = new GenericResponse<UserModel>()
+                {
+                    StatusCode = 200,
+                    ResponseData = userModel,
+                    ResponseMessage = "Success"
+                };
+                return CreatedAtAction(nameof(GetById), new { id = userModel.Id }, response);
             }
             else
-                return StatusCode(500);
+            {
+                GenericResponse<UserModel> response = new GenericResponse<UserModel>()
+                {
+                    StatusCode = 500,
+                    ResponseData = null,
+                    ErrorMessage = "Internal Server Error in adding the user"
+                };
+                return StatusCode(500, response);
+            }
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginUser([FromBody] UserCredentialsModel credentials)
+        {
+            var credentialsBo = _mapper.Map<UserCredentialsBo>(credentials);
+            string token = await _userService.Login(credentialsBo);
+            GenericResponse<string> response = new GenericResponse<string>()
+            {
+                StatusCode = 200,
+                ResponseData = token,
+                ResponseMessage = "Success"
+            };
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok();
         }
     }
 }

@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManagement.DAL.DTOs
+namespace TaskManagement.BLL.BOs
 {
-    public class UserDto
+    public class UserCredentialsBo
     {
-        public int? Id { get; set; }
-        public string Name { get; set; }
         public string Email { get; set; }
-        public int? Age { get; set; }
         public string Password { get; set; }
     }
 }

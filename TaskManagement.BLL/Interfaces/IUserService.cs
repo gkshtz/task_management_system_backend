@@ -10,5 +10,6 @@ namespace TaskManagement.BLL.Interfaces
     public interface IUserService
     {
         public Task<UserBo> RegisterUser(UserBo userBo);
+        public Task<string> Login(UserCredentialsBo creadenrialsBo);
     }
 }

@@ -21,7 +21,7 @@ namespace TaskManagement.Controllers
         public async Task<IActionResult> GetAsync()
         {
             var taskBo = await _taskService.GetAllTasks();
-            var taskModels = _mapper.Map<List<TaskModel>>(taskBo);
+            var taskModels = _mapper.Map<List<TaskModel>?>(taskBo);
             GenericResponse<List<TaskModel>> response = new GenericResponse<List<TaskModel>>
             {
                 StatusCode = 200,
@@ -70,7 +70,7 @@ namespace TaskManagement.Controllers
                     ResponseData = false,
                     ResponseMessage = "Record Not Found"
                 };
-                return Ok(response);
+                return NotFound(response);
             }
         }
 
@@ -96,7 +96,7 @@ namespace TaskManagement.Controllers
                     ResponseData = false,
                     ResponseMessage = "Record Not Found"
                 };
-                return Ok(response);
+                return NotFound(response);
             }
         }
     }

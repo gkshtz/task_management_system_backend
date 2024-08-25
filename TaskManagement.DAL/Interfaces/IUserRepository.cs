@@ -10,5 +10,6 @@ namespace TaskManagement.DAL.Interfaces
     public interface IUserRepository
     {
         public Task<UserDto> AddUser(UserDto userDto);
+        public Task<UserDto> FetchUserByEmail(string email);
     }
 }

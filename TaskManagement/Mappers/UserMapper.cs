@@ -12,6 +12,7 @@ namespace TaskManagement.Mappers
         {
             CreateMap<UserModel, UserBo>().ReverseMap();
             CreateMap<UserDto, UserBo>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
         }
     }
 }

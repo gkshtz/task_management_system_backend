@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 using TaskManagement.Models;
+using TaskManagement.Utils.Exceptions;
 
 namespace TaskManagement.Middlewares
 {
@@ -17,6 +18,10 @@ namespace TaskManagement.Middlewares
             try
             {
                 await _next(httpContext);
+            }
+            catch(CustomException ex)
+            {
+                HandleCustomException(httpContext, ex);
             }
             catch (Exception ex)
             {
@@ -35,6 +40,20 @@ namespace TaskManagement.Middlewares
                 ErrorMessage = exception.Message
             };
 
+            var jsonResponse = JsonSerializer.Serialize(response);
+            context.Response.WriteAsync(jsonResponse);
+        }
+
+        private void HandleCustomException(HttpContext context, CustomException exception)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = exception.Status;
+            var response = new
+            {
+                StatusCode = context.Response.StatusCode,
+                ErrorName = exception.Name,
+                ErrorMessage = exception.Message
+            };
             var jsonResponse = JsonSerializer.Serialize(response);
             context.Response.WriteAsync(jsonResponse);
         }
